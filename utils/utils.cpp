@@ -2,8 +2,10 @@
 // Created by andiw on 24/10/2023.
 //
 
-#include "optix_lib.h"
 #include <spdlog/spdlog.h>
+
+#include "optix_lib.h"
+#include "device_buffer.h"
 
 #include <optix_function_table_definition.h>
 

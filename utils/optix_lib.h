@@ -6,6 +6,8 @@
 #define TRAYRACING_OPTIX_LIB_H
 
 #include <string>
+#include <stdexcept>
+#include <format>
 
 #include <cuda_runtime.h>
 #include <optix.h>
@@ -21,15 +23,48 @@ void say_hello();
     const OptixResult res = call;                                             \
     if( res != OPTIX_SUCCESS )                                                \
       {                                                                       \
-        spdlog::error("Optix call {} failed (line {})\n",                     \
-            std::string{#call}, __LINE__                                      \
+        spdlog::error("{} failed | {} | {}:{}",                               \
+            std::string{#call},                                               \
+            std::string{optixGetErrorString(res)},                            \
+            __FILE__,                                                         \
+            __LINE__                                                          \
             );                                                                \
-        spdlog::error("{}: {}",                                               \
-            std::string{optixGetErrorName(res)},                              \
-            std::string{optixGetErrorString(res)}                             \
-           );                                                                 \
-        exit( 2 );                                                            \
       }                                                                       \
   }
+
+#define OP_CHECK_FATAL( call )                                                \
+  {                                                                           \
+    const OptixResult res = call;                                             \
+    if( res != OPTIX_SUCCESS )                                                \
+      {                                                                       \
+        throw std::runtime_error(                                             \
+            std::format("{} failed | {} | {}:{}",                             \
+                        std::string{#call},                                   \
+                        std::string{optixGetErrorString(res)},                \
+                        __FILE__,                                             \
+                        __LINE__                                              \
+            )                                                                 \
+        );                                                                    \
+      }                                                                       \
+  }
+#define CU_CHECK( call ) \
+{                         \
+    auto const err = cudaSetDevice(call); \
+    if (err != cudaError::cudaSuccess) { \
+    spdlog::error("{}: {} | {}:{}", cudaGetErrorName(err), cudaGetErrorString(err), __FILE__, __LINE__);\
+    }\
+}
+
+#define CU_CHECK_FATAL( call )                                   \
+{                                                                \
+    auto const err = cudaSetDevice(call);                        \
+    if (err != cudaError::cudaSuccess) {                         \
+        throw std::runtime_error(                                \
+        std::format("{} failed | {} | {}:{}",                    \
+                    std::string{#call},                          \
+                    cudaGetErrorString(err), __FILE__, __LINE__) \
+        );                                                       \
+    }                                                            \
+}
 
 #endif //TRAYRACING_OPTIX_LIB_H

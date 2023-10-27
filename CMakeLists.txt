@@ -23,4 +23,5 @@ add_subdirectory(utils)
 
 
 add_subdirectory(examples/optix7_01)
+add_subdirectory(examples/optix7_02)
 
