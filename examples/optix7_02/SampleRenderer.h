@@ -22,6 +22,8 @@ public:
 
     void resize(int width, int height);
 
+    void downloadPixels(std::vector<unsigned int>& pixels);
+
 protected:
     void initOptix();
 
@@ -59,11 +61,14 @@ protected:
     DeviceBuffer missRecordsBuffer;
     std::vector<OptixProgramGroup> hitgroupPGs;
     DeviceBuffer hitgroupRecordsBuffer;
+    OptixShaderBindingTable sbt;
 
     LaunchParams launchParams;
     DeviceBuffer launchParamsBuffer;
 
     DeviceBuffer colorBuffer;
+
+    std::string logBuffer;
 };
 
 

@@ -10,8 +10,7 @@
       "name": "default",
       "displayName": "Default Config",
       "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build/default",
-      "toolchainFile": "K:/vcpkg/scripts/buildsystems/vcpkg.cmake"
+      "binaryDir": "${sourceDir}/build/default"
     }
   ],
   "buildPresets": [
