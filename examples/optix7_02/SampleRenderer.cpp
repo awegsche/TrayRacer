@@ -125,6 +125,8 @@ void SampleRenderer::createModule() {
 
     std::ifstream cudaCode("cuDevicePrograms.cu");
 
+    if (!cudaCode.is_open()) throw std::runtime_error("couldn't open cuDevicePrograms.cu");
+
     std::ostringstream code;
     code << cudaCode.rdbuf();
 
