@@ -7,14 +7,44 @@
     },
     "configurePresets": [
         {
-            "name": "default",
-            "displayName": "Default Config",
-            "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build/default"
+            "name": "msvc",
+            "displayName": "MSBuild (vcpkg toolchain) Configure Settings",
+            "description": "Configure with VS generators and with vcpkg toolchain",
+            "binaryDir": "${sourceDir}/builds/${presetName}",
+            "generator": "Visual Studio 17 2022",
+            "architecture": {
+                "strategy": "set",
+                "value": "x64"
+            },
+            "cacheVariables": {
+                "CMAKE_TOOLCHAIN_FILE": {
+                    "type": "FILEPATH",
+                    "value": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+                }
+            }
+        },
+        {
+            "name": "debug-msvc",
+            "inherits": "msvc",
+            "displayName": "MSBuild (vcpkg toolchain) Configure Settings",
+            "description": "Debug Configure with VS generators and with vcpkg toolchain",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "release-msvc",
+            "inherits": "msvc",
+            "displayName": "MSBuild (vcpkg toolchain) Configure Settings",
+            "description": "Release Configure with VS generators and with vcpkg toolchain",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
         },
         {
             "name": "clang",
-            "displayName": "Default Config",
+            "displayName": "clang config",
+            "description": "Only for generation of compile_commands.json",
             "generator": "Ninja",
             "binaryDir": "${sourceDir}/build/default",
             "cacheVariables": {
@@ -30,8 +60,12 @@
     ],
     "buildPresets": [
         {
-            "name": "default",
-            "configurePreset": "default"
+            "name": "debug-msvc",
+            "configurePreset": "debug-msvc"
+        },
+        {
+            "name": "release-msvc",
+            "configurePreset": "release-msvc"
         },
         {
             "name": "clang",

@@ -3,10 +3,9 @@ project(TrayRacing)
 
 set(CMAKE_CXX_STANDARD 23)
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/OptiX_SDK/SDK/CMake")
+set(CMAKE_MODULE_PATH "$ENV{OptiX_PATH}/SDK/CMake")
 
 message("toolchain file: ${CMAKE_TOOLCHAIN_FILE}")
-
 
 find_package(glfw3 CONFIG REQUIRED)
 find_package(spdlog CONFIG REQUIRED)
