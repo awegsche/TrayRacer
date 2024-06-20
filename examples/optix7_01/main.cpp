@@ -1,11 +1,12 @@
 //
 // Created by andiw on 24/10/2023.
 //
-#include <spdlog/spdlog.h>
 #include <cuda_runtime.h>
 #include <optix_lib.h>
+#include <spdlog/spdlog.h>
 
-void initOptiX() {
+void initOptiX()
+{
     cudaFree(nullptr);
 
     int numDevices;
@@ -22,7 +23,8 @@ void initOptiX() {
     OP_CHECK(optixInit());
 }
 
-int main() {
+int main()
+{
 
     spdlog::info("hello world");
 
