@@ -13,21 +13,6 @@
 
 #include "optix_lib.h"
 
-const char *saxpy = "                                          \n\
-extern \"C\" __global__                                        \n\
-void saxpy(float a, float *x, float *y, float *out, size_t n)  \n\
-{                                                              \n\
-   size_t tid = blockIdx.x * blockDim.x + threadIdx.x;         \n\
-   if (tid < n) {                                              \n\
-      out[tid] = a * x[tid] + y[tid];                          \n\
-   }                                                           \n\
-}      \n";
-
-const char *opts[] = {
-    "--gpu-architecture=compute_86",
-    "--fmad=true",
-};
-
 int main() {
 
     spdlog::info("first, let's try running a simple CUDA program");

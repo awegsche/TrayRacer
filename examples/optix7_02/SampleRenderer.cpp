@@ -5,7 +5,7 @@
 #include "SampleRenderer.h"
 #include "launch_params.h"
 #include "optix_host.h"
-#include "optix_types.h"
+#include <optix_types.h>
 
 #include <fstream>
 
@@ -160,7 +160,7 @@ void SampleRenderer::createModule() {
             &module
             ));
 
-    if (logsize > 1) spdlog::info("{}", logBuffer);
+    if (logsize > 0) spdlog::info("{}", logBuffer);
 }
 
 void SampleRenderer::createRaygenPrograms() {
