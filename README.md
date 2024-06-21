@@ -31,3 +31,14 @@ cd ./builds/debug-msvc/exampels/optix7_02
 ./Debug/ex02.exe
 cd -
 ```
+
+## Particularities
+
+### Raylib
+
+Raylib's function definitions clash with some symbols in windows headers
+(see [here](https://github.com/raysan5/raylib/issues/1217) for a discussion).
+
+To fix this, and to have my own accessible list of log items, I added a custom logging system, which
+is compiled with the `NO_SPDLOG` flag and is made available in the `utils_no_spdlog` target library.
+
