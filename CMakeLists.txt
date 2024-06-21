@@ -18,12 +18,16 @@ message("\n---------------------------------------------------------------------
 message("---- installing external libs --------------------------------------------------")
 message("--------------------------------------------------------------------------------")
 
-include(FetchContent)
+message("---- OptiX ---------------------------------------------------------------------")
+set(OptiX_INSTALL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/OptiX_SDK" CACHE PATH "Path to OptiX installed location.")
+find_package(OptiX REQUIRED)
 
 message("---- vcpkg installed -----------------------------------------------------------")
 find_package(glfw3 CONFIG REQUIRED)
 find_package(spdlog CONFIG REQUIRED)
 #find_package(imgui CONFIG REQUIRED)
+
+include(FetchContent)
 
 message("---- raylib --------------------------------------------------------------------")
 find_package(raylib QUIET)
@@ -32,11 +36,25 @@ if (NOT raylib_FOUND)
         raylib
         GIT_REPOSITORY https://github.com/raysan5/raylib.git
         GIT_TAG 5.0
+        GIT_SHALLOW 1
     )
     FetchContent_MakeAvailable(raylib)
 endif()
-set(OptiX_INSTALL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/OptiX_SDK" CACHE PATH "Path to OptiX installed location.")
-find_package(OptiX REQUIRED)
+
+message("---- raylib C++ ----------------------------------------------------------------")
+find_package(raylib_cpp QUIET)
+if (NOT raylib_cpp_FOUND)
+    if (NOT DEFINED RAYLIB_CPP_VERSION)
+        set(RAYLIB_CPP_VERSION v5.0.1)
+    endif()
+    include(FetchContent)
+    FetchContent_Declare(
+        raylib_cpp
+        GIT_REPOSITORY https://github.com/RobLoach/raylib-cpp.git
+        GIT_TAG ${RAYLIB_CPP_VERSION}
+    )
+    FetchContent_MakeAvailable(raylib_cpp)
+endif()
 
 message("---- find CUDA -----------------------------------------------------------------")
 find_package(CUDA REQUIRED)
@@ -51,4 +69,5 @@ message("---- EXAMPLES ---------------------------------------------------------
 message("--------------------------------------------------------------------------------")
 add_subdirectory(examples/optix7_01)
 add_subdirectory(examples/optix7_02)
+add_subdirectory(examples/raylib_output)
 

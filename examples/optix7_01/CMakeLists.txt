@@ -16,6 +16,8 @@ target_link_libraries(ex01
         ${optix_LIBRARY}
         ${CUDA_LIBRARIES}
         ${CUDA_CUDA_LIBRARY}
+        ${CUDA_CUDART_LIBRARY}
+        ${CUDA_nvrtc_LIBRARY}
         spdlog::spdlog
         utils
 )

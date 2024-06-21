@@ -5,11 +5,12 @@
 #ifndef TRAYRACING_DEVICE_BUFFER_H
 #define TRAYRACING_DEVICE_BUFFER_H
 
-#include "optix_types.h"
+#include <optix_types.h>
 #include <cuda_runtime.h>
-#include <optix_lib.h>
 #include <stdexcept>
 #include <vector>
+
+#include <optix_lib.h>
 
 #ifdef NDEBUG
 #define ASSERT(expr, msg)
@@ -29,8 +30,6 @@ public:
     template<typename T>
     void to_device(T* data, size_t count) {
         size_t size_in_bytes = sizeof(T) * count;
-        spdlog::info("size_in_bytes: {}", size_in_bytes);
-        spdlog::info("allocated: {}", allocated_size);
         ASSERT(size_in_bytes == allocated_size, "device data size differs from host data size");
 
         CU_CHECK(cudaMemcpy(device_ptr, data, size_in_bytes, cudaMemcpyHostToDevice));

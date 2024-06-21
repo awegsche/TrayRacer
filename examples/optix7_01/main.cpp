@@ -28,8 +28,6 @@ int main()
 
     spdlog::info("hello world");
 
-    say_hello();
-
     initOptiX();
 
     return 0;

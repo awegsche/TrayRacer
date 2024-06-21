@@ -8,6 +8,8 @@ include_directories(
         ${CUDA_INCLUDE_DIRS}
 )
 
+# ---- the default using spdlog --------------------------------------------------------------------
+
 add_library(utils
     utils.cpp
 )
@@ -15,3 +17,12 @@ add_library(utils
 target_link_libraries(utils
         spdlog::spdlog
 )
+
+# ---- for raylib we skip spdlog -------------------------------------------------------------------
+
+add_library(utils_no_spdlog
+    utils.cpp
+    logging.cpp
+)
+
+target_compile_definitions(utils_no_spdlog PRIVATE NO_SPDLOG=1)
