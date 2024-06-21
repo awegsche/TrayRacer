@@ -7,6 +7,7 @@
 - A recent [CUDA Toolkit](https://developer.nvidia.com/cuda-toolkit)
 - The [OptiX SDK](https://developer.nvidia.com/designworks/optix/download)
 - Add a `OptiX_PATH` env variable if the OptiX installer doesn't do this for you
+- Run `bootstrap.ps1` to download necessary assets
 
 ### Examples
 
